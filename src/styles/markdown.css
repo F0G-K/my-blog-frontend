@@ -1,0 +1,137 @@
+/**
+ * 文章正文 / 关于页 Markdown 渲染样式。
+ * 容器类 .markdown-body 由 utils/markdown.js 渲染结果包裹。
+ * 代码高亮主题(highlight.js)随深 / 浅色切换,见 utils/theme.js。
+ */
+
+.markdown-body {
+  color: var(--text-primary);
+  font-size: 15px;
+  line-height: 1.8;
+  word-wrap: break-word;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin: 1.6em 0 0.8em;
+  font-weight: 600;
+  line-height: 1.4;
+  scroll-margin-top: calc(var(--header-height) + 16px);
+}
+
+.markdown-body h1 {
+  font-size: 1.8em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body p {
+  margin: 0.8em 0;
+}
+
+.markdown-body a {
+  color: var(--color-primary);
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  margin: 0.8em 0;
+  padding-left: 1.6em;
+}
+
+.markdown-body ul {
+  list-style: disc;
+}
+
+.markdown-body ol {
+  list-style: decimal;
+}
+
+.markdown-body li {
+  margin: 0.3em 0;
+}
+
+.markdown-body blockquote {
+  margin: 1em 0;
+  padding: 0.4em 1em;
+  color: var(--text-regular);
+  border-left: 4px solid var(--color-primary);
+  background: var(--bg-surface-2);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.markdown-body code {
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, monospace;
+  font-size: 0.9em;
+  padding: 0.15em 0.4em;
+  background: var(--code-bg);
+  border-radius: 4px;
+}
+
+.markdown-body pre {
+  margin: 1em 0;
+  padding: 16px;
+  overflow: auto;
+  background: var(--code-bg);
+  border-radius: var(--radius-sm);
+}
+
+.markdown-body pre code {
+  padding: 0;
+  background: transparent;
+  font-size: 0.875em;
+  line-height: 1.6;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+  margin: 0.5em 0;
+}
+
+.markdown-body table {
+  width: 100%;
+  margin: 1em 0;
+  border-collapse: collapse;
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+}
+
+.markdown-body th {
+  background: var(--bg-surface-2);
+  font-weight: 600;
+}
+
+.markdown-body hr {
+  margin: 1.6em 0;
+  border: none;
+  border-top: 1px solid var(--border-color);
+}
+
+/* 搜索高亮命中片段 */
+.markdown-body em.highlight,
+.search-highlight em {
+  font-style: normal;
+  color: var(--color-danger);
+  background: var(--color-primary-soft);
+  padding: 0 2px;
+  border-radius: 2px;
+}
