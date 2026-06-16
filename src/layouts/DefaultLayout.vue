@@ -25,8 +25,10 @@ const { isDesktop, isMobile } = useBreakpoint()
 
       <!-- 中 + 右:页面内容 -->
       <main class="default-layout__main">
-        <RouterView v-slot="{ Component }">
-          <component :is="Component" />
+        <RouterView v-slot="{ Component, route }">
+          <Transition name="fade-slide" mode="out-in">
+            <component :is="Component" :key="route.path" />
+          </Transition>
         </RouterView>
 
         <!-- 移动端:个人信息下移到底部 -->

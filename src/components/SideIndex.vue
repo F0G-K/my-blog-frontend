@@ -87,12 +87,23 @@ function goTag(tag) {
 }
 
 .side-block__title {
+  position: relative;
   font-size: 15px;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 12px;
-  padding-left: 8px;
-  border-left: 3px solid var(--color-primary);
+  padding-left: 12px;
+}
+
+.side-block__title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  width: 4px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--color-primary), var(--color-accent));
 }
 
 .side-empty {
@@ -105,11 +116,14 @@ function goTag(tag) {
   color: var(--text-regular);
   padding: 6px 0;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition:
+    color var(--dur-fast) var(--ease-soft),
+    padding-left var(--dur-fast) var(--ease-soft);
 }
 
 .latest li:hover {
   color: var(--color-primary);
+  padding-left: 4px;
 }
 
 .tag-cloud {
@@ -125,12 +139,16 @@ function goTag(tag) {
   padding: 4px 10px;
   border-radius: 999px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition:
+    background var(--dur-fast) var(--ease-soft),
+    color var(--dur-fast) var(--ease-soft),
+    transform var(--dur-fast) var(--ease-soft);
 }
 
 .tag-cloud__item:hover {
   background: var(--color-primary-soft);
   color: var(--color-primary);
+  transform: translateY(-2px);
 }
 
 .tag-cloud__item em {

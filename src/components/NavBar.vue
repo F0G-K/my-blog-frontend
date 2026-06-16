@@ -117,9 +117,11 @@ watch(
   top: 0;
   z-index: 100;
   height: var(--header-height);
-  background: var(--bg-surface);
+  /* 轻量毛玻璃:仅顶栏使用 */
+  background: color-mix(in srgb, var(--bg-surface) 78%, transparent);
   border-bottom: 1px solid var(--border-color);
-  backdrop-filter: saturate(180%) blur(8px);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
 }
 
 .navbar__inner {
@@ -130,10 +132,15 @@ watch(
 }
 
 .navbar__brand {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
   white-space: nowrap;
+  background: linear-gradient(120deg, var(--color-primary), var(--color-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .navbar__menu {
@@ -144,11 +151,13 @@ watch(
 }
 
 .navbar__link {
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
+  padding: 6px 14px;
+  border-radius: var(--radius-round, 999px);
   color: var(--text-regular);
   font-size: 15px;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background var(--dur-fast) var(--ease-soft),
+    color var(--dur-fast) var(--ease-soft);
 }
 
 .navbar__link:hover {
@@ -159,6 +168,7 @@ watch(
 .navbar__link.is-active {
   color: var(--color-primary);
   font-weight: 600;
+  background: var(--color-primary-soft);
 }
 
 .navbar__actions {

@@ -1,5 +1,5 @@
 /**
- * 主题色板:深 / 浅色双套 CSS 变量。
+ * 主题色板:深 / 浅色双套 CSS 变量。蓝紫(periwinkle)萌系基调,克制柔和。
  * - 浅色挂在 :root 与 [data-theme='light']
  * - 深色挂在 [data-theme='dark']
  * 由 utils/theme.js 在 <html> 上切换 data-theme 属性。
@@ -9,84 +9,103 @@
 [data-theme='light'] {
   color-scheme: light;
 
-  /* 背景 */
-  --bg-page: #f5f6f8;
+  /* 背景(淡蓝白) */
+  --bg-page: #f3f4fb;
   --bg-surface: #ffffff;
-  --bg-surface-2: #f0f2f5;
-  --bg-hover: #f2f3f5;
-  --bg-mask: rgba(0, 0, 0, 0.45);
+  --bg-surface-2: #f0f1fa;
+  --bg-hover: #eef0fb;
+  --bg-mask: rgba(40, 42, 70, 0.4);
+  /* 页面渐变:极淡蓝紫,几乎接近纯色,保持"真实" */
+  --page-gradient: linear-gradient(180deg, #f5f5fd 0%, #eef1fb 45%, #f3f0fa 100%);
 
-  /* 文字 */
-  --text-primary: #1f2329;
-  --text-regular: #4e5969;
-  --text-secondary: #86909c;
-  --text-placeholder: #a8abb2;
+  /* 文字(略带蓝调中性色) */
+  --text-primary: #232539;
+  --text-regular: #4a4d66;
+  --text-secondary: #868aa6;
+  --text-placeholder: #adb1c7;
   --text-inverse: #ffffff;
 
   /* 边框 / 分割线 */
-  --border-color: #e5e6eb;
-  --border-light: #f0f0f0;
+  --border-color: #e6e7f2;
+  --border-light: #eff0f8;
 
-  /* 品牌色 */
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
-  --color-primary-soft: rgba(59, 130, 246, 0.12);
+  /* 品牌色(天空蓝紫) */
+  --color-primary: #7c83fd;
+  --color-primary-hover: #646cf0;
+  --color-primary-soft: rgba(124, 131, 253, 0.12);
+  --color-accent: #9ad0ec;
+  --color-accent-soft: rgba(154, 208, 236, 0.18);
 
-  /* 功能色 */
-  --color-success: #00b42a;
-  --color-warning: #ff7d00;
-  --color-danger: #f53f3f;
+  /* 功能色(与主色协调的柔和版) */
+  --color-success: #41c0a0;
+  --color-warning: #f6b756;
+  --color-danger: #f47174;
 
-  /* 阴影 */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  /* 阴影(带蓝紫色调的柔和投影) */
+  --shadow-sm: 0 1px 3px rgba(124, 131, 253, 0.08);
+  --shadow-md: 0 6px 20px rgba(124, 131, 253, 0.1);
+  --shadow-lg: 0 12px 32px rgba(124, 131, 253, 0.16);
+
+  /* 头像 / 聚焦柔光环 */
+  --ring-primary: 0 0 0 4px rgba(124, 131, 253, 0.18);
 
   /* 代码块 */
-  --code-bg: #f6f8fa;
+  --code-bg: #f4f4fc;
 }
 
 [data-theme='dark'] {
   color-scheme: dark;
 
-  --bg-page: #17171a;
-  --bg-surface: #232324;
-  --bg-surface-2: #2a2a2c;
-  --bg-hover: #2f2f31;
+  /* 背景(深蓝夜空) */
+  --bg-page: #14151f;
+  --bg-surface: #1f2030;
+  --bg-surface-2: #262838;
+  --bg-hover: #2c2e42;
   --bg-mask: rgba(0, 0, 0, 0.6);
+  --page-gradient: linear-gradient(180deg, #14151f 0%, #171826 50%, #191525 100%);
 
-  --text-primary: #f7f8fa;
-  --text-regular: #c9cdd4;
-  --text-secondary: #8a8f99;
-  --text-placeholder: #6b7280;
-  --text-inverse: #1f2329;
+  --text-primary: #f0f1fa;
+  --text-regular: #c5c7dc;
+  --text-secondary: #8b8fab;
+  --text-placeholder: #6b6f88;
+  --text-inverse: #1a1b28;
 
-  --border-color: #3a3a3c;
-  --border-light: #2f2f31;
+  --border-color: #34364b;
+  --border-light: #2a2c3e;
 
-  --color-primary: #4f8ff7;
-  --color-primary-hover: #6ba1f9;
-  --color-primary-soft: rgba(79, 143, 247, 0.16);
+  /* 主色在深色下提亮,蓝紫高光 */
+  --color-primary: #9aa0ff;
+  --color-primary-hover: #b0b5ff;
+  --color-primary-soft: rgba(154, 160, 255, 0.18);
+  --color-accent: #8fcce8;
+  --color-accent-soft: rgba(143, 204, 232, 0.16);
 
-  --color-success: #23c343;
-  --color-warning: #ff9a2e;
-  --color-danger: #f76560;
+  --color-success: #4fd0ad;
+  --color-warning: #f7c270;
+  --color-danger: #f78a8c;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 22px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 14px 36px rgba(0, 0, 0, 0.55);
 
-  --code-bg: #1a1b26;
+  --ring-primary: 0 0 0 4px rgba(154, 160, 255, 0.22);
+
+  --code-bg: #161725;
 }
 
-/* ---- 布局 / 尺寸常量 ---- */
+/* ---- 布局 / 尺寸 / 动效常量 ---- */
 :root {
   --layout-max-width: 1200px;
   --header-height: 60px;
   --layout-gap: 24px;
   --left-col-width: 240px;
   --right-col-width: 280px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  /* 动效:柔和缓动 + 时长,统一引用,保证"流畅但不夸张" */
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast: 0.18s;
+  --dur: 0.28s;
 }

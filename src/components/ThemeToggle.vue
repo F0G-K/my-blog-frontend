@@ -11,10 +11,10 @@ const label = computed(() => (theme.isDark ? '切换到浅色' : '切换到深�
 <template>
   <el-tooltip :content="label" placement="bottom">
     <button class="theme-toggle" :aria-label="label" @click="theme.toggle()">
-      <el-icon :size="18">
-        <Moon v-if="theme.isDark" />
-        <Sunny v-else />
-      </el-icon>
+      <Transition name="toggle-spin" mode="out-in">
+        <el-icon v-if="theme.isDark" :size="18" key="moon"><Moon /></el-icon>
+        <el-icon v-else :size="18" key="sun"><Sunny /></el-icon>
+      </Transition>
     </button>
   </el-tooltip>
 </template>
@@ -30,11 +30,31 @@ const label = computed(() => (theme.isDark ? '切换到浅色' : '切换到深�
   border-radius: var(--radius-sm);
   background: transparent;
   color: var(--text-regular);
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background var(--dur-fast) var(--ease-soft),
+    color var(--dur-fast) var(--ease-soft);
 }
 
 .theme-toggle:hover {
   background: var(--bg-hover);
   color: var(--color-primary);
+}
+
+/* 日/月图标切换:微旋转 + 淡入 */
+.toggle-spin-enter-active,
+.toggle-spin-leave-active {
+  transition:
+    opacity var(--dur-fast) var(--ease-soft),
+    transform var(--dur-fast) var(--ease-soft);
+}
+
+.toggle-spin-enter-from {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
+}
+
+.toggle-spin-leave-to {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.6);
 }
 </style>

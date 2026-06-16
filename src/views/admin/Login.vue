@@ -77,8 +77,13 @@ async function onSubmit() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-page);
   position: relative;
+  overflow: hidden;
+  /* 淡蓝紫渐变 + 两处极淡柔光斑(克制) */
+  background:
+    radial-gradient(420px 420px at 18% 22%, var(--color-primary-soft), transparent 70%),
+    radial-gradient(460px 460px at 82% 78%, var(--color-accent-soft), transparent 70%),
+    var(--page-gradient);
 }
 
 .login__toggle {
@@ -99,9 +104,13 @@ async function onSubmit() {
 
 .login__title {
   font-size: 24px;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-weight: 800;
   text-align: center;
+  background: linear-gradient(120deg, var(--color-primary), var(--color-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .login__subtitle {

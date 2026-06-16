@@ -57,19 +57,40 @@ const stats = computed(() => {
 
 <style scoped>
 .profile-card {
+  position: relative;
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 24px 16px;
   text-align: center;
   box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition:
+    box-shadow var(--dur) var(--ease-soft),
+    transform var(--dur) var(--ease-soft);
+}
+
+.profile-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+/* 顶部柔和渐变装饰条(克制点缀) */
+.profile-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 56px;
+  background: linear-gradient(120deg, var(--color-primary-soft), var(--color-accent-soft));
 }
 
 .profile-card__avatar {
+  position: relative;
   margin: 0 auto 12px;
-  background: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
   color: #fff;
   font-size: 28px;
+  box-shadow: var(--ring-primary);
 }
 
 .profile-card__name {

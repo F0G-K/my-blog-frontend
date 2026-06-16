@@ -38,6 +38,8 @@ const routes = [
     children: [
       { path: 'articles', name: 'admin-articles', component: () => import('@/views/admin/ArticleList.vue'), meta: { title: '文章管理' } },
       { path: 'articles/edit/:id?', name: 'admin-article-edit', component: () => import('@/views/admin/ArticleEdit.vue'), meta: { title: '编辑文章' } },
+      { path: 'categories', name: 'admin-categories', component: () => import('@/views/admin/Categories.vue'), meta: { title: '分类管理' } },
+      { path: 'tags', name: 'admin-tags', component: () => import('@/views/admin/Tags.vue'), meta: { title: '标签管理' } },
       { path: 'comments', name: 'admin-comments', component: () => import('@/views/admin/Comments.vue'), meta: { title: '评论审核' } },
       { path: 'projects', name: 'admin-projects', component: () => import('@/views/admin/Projects.vue'), meta: { title: '项目管理' } },
       { path: 'site-info', name: 'admin-site-info', component: () => import('@/views/admin/SiteInfo.vue'), meta: { title: '站点信息' } },

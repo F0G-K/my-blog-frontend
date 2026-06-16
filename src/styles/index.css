@@ -1,8 +1,10 @@
 /**
  * 样式入口:统一在此聚合,main.js 只需引入这一份。
- * 引入顺序:变量 → 断点 → 基础 reset → markdown 渲染样式。
+ * 引入顺序:变量 → 断点 → 基础 reset → markdown 渲染样式 → Element Plus 适配。
+ * element-overrides 放最后,确保覆盖 EP 默认样式且能引用前面定义的变量。
  */
 @import './variables.css';
 @import './breakpoints.css';
 @import './base.css';
 @import './markdown.css';
+@import './element-overrides.css';

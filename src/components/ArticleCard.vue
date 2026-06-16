@@ -63,13 +63,17 @@ function goDetail() {
   border-radius: var(--radius-md);
   padding: 20px;
   cursor: pointer;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition:
+    box-shadow var(--dur) var(--ease-soft),
+    transform var(--dur) var(--ease-soft),
+    border-color var(--dur) var(--ease-soft);
   overflow: hidden;
 }
 
 .article-card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--color-primary) 35%, var(--border-color));
 }
 
 .article-card__title {

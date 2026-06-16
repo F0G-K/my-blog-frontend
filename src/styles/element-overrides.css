@@ -1,0 +1,79 @@
+/**
+ * Element Plus 主题适配:把 EP 的主色族与圆角映射到蓝紫调,
+ * 让按钮 / 输入 / 表格 / 对话框 / 分页 / 标签 / 菜单整体统一。
+ * 仅做变量级覆盖 + 极少选择器微调,不侵入组件结构。
+ */
+
+:root {
+  --el-color-primary: #7c83fd;
+  --el-color-primary-light-3: #a3a8fd;
+  --el-color-primary-light-5: #bec1fe;
+  --el-color-primary-light-7: #d8dafe;
+  --el-color-primary-light-8: #e5e6fe;
+  --el-color-primary-light-9: #f2f3ff;
+  --el-color-primary-dark-2: #6369ca;
+
+  /* 圆角整体偏圆,呼应萌系基调 */
+  --el-border-radius-base: 10px;
+  --el-border-radius-small: 8px;
+  --el-border-radius-round: 999px;
+
+  /* 字体与全站一致(沿用系统字体) */
+  --el-font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', Roboto, Helvetica, Arial, sans-serif;
+}
+
+html.dark {
+  --el-color-primary: #9aa0ff;
+  --el-color-primary-light-3: #6c70b2;
+  --el-color-primary-light-5: #4d5080;
+  --el-color-primary-light-7: #2e304c;
+  --el-color-primary-light-8: #1f2033;
+  --el-color-primary-light-9: #0f101a;
+  --el-color-primary-dark-2: #aeb3ff;
+}
+
+/* ---- 少量微调:更柔和的圆角与过渡 ---- */
+.el-button {
+  border-radius: var(--el-border-radius-base);
+  transition:
+    background-color var(--dur-fast) var(--ease-soft),
+    border-color var(--dur-fast) var(--ease-soft),
+    color var(--dur-fast) var(--ease-soft),
+    box-shadow var(--dur-fast) var(--ease-soft),
+    transform var(--dur-fast) var(--ease-soft);
+}
+
+/* 实心主按钮:轻微柔光 + 按压回弹 */
+.el-button--primary {
+  box-shadow: 0 4px 12px rgba(124, 131, 253, 0.28);
+}
+
+.el-button--primary:hover {
+  transform: translateY(-1px);
+}
+
+.el-button--primary:active {
+  transform: translateY(0);
+}
+
+.el-tag {
+  border-radius: var(--el-border-radius-round);
+}
+
+.el-card {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 输入框聚焦时柔光环 */
+.el-input__wrapper.is-focus {
+  box-shadow: 0 0 0 1px var(--el-color-primary) inset, var(--ring-primary);
+}
+
+/* 后台菜单选中项:柔和底色 + 圆角 */
+.el-menu-item.is-active {
+  background: var(--color-primary-soft);
+  border-radius: var(--radius-sm);
+}

@@ -14,8 +14,11 @@ import {
   ElSelect,
   ElOption,
   ElButton,
+  ElUpload,
+  ElIcon,
   ElMessage,
 } from 'element-plus'
+import { UploadFilled, Delete } from '@element-plus/icons-vue'
 import {
   getAdminArticleDetail,
   createArticle,
@@ -119,6 +122,35 @@ async function onUploadImg(files, callback) {
   }
 }
 
+/* ---- 封面上传(拖拽 + 按钮)---- */
+function beforeCover(file) {
+  if (!file.type.startsWith('image/')) {
+    ElMessage.warning('只能上传图片')
+    return false
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    ElMessage.warning('封面不能超过 5MB')
+    return false
+  }
+  return true
+}
+
+async function doCoverUpload(option) {
+  try {
+    const res = await uploadImage(option.file)
+    form.coverUrl = res.url
+    ElMessage.success('封面已上传')
+    option.onSuccess?.(res)
+  } catch (e) {
+    ElMessage.error('封面上传失败')
+    option.onError?.(e)
+  }
+}
+
+function removeCover() {
+  form.coverUrl = ''
+}
+
 /* ---- 手动保存 / 发布 ---- */
 async function save(status) {
   if (!form.title.trim()) {
@@ -183,7 +215,27 @@ onBeforeUnmount(() => clearTimeout(autosaveTimer))
         </el-form-item>
       </div>
       <el-form-item label="封面">
-        <el-input v-model="form.coverUrl" placeholder="封面图 URL(留空则为文字卡片)" clearable />
+        <div class="cover-field">
+          <div v-if="form.coverUrl" class="cover-preview">
+            <img :src="form.coverUrl" alt="封面预览" />
+            <el-button size="small" :icon="Delete" @click="removeCover">移除</el-button>
+          </div>
+          <el-upload
+            drag
+            :show-file-list="false"
+            accept="image/*"
+            :before-upload="beforeCover"
+            :http-request="doCoverUpload"
+            class="cover-upload"
+          >
+            <el-icon class="cover-upload__icon"><UploadFilled /></el-icon>
+            <div class="cover-upload__text">将图片拖到此处</div>
+            <el-button type="primary" size="small" class="cover-upload__btn">上传封面</el-button>
+            <template #tip>
+              <div class="cover-upload__tip">留空则为文字卡片;支持 ≤5MB 图片</div>
+            </template>
+          </el-upload>
+        </div>
       </el-form-item>
       <el-form-item label="摘要">
         <el-input v-model="form.summary" type="textarea" :rows="2" maxlength="200" show-word-limit placeholder="文字卡片摘要" />
@@ -243,5 +295,40 @@ onBeforeUnmount(() => clearTimeout(autosaveTimer))
 .article-edit__actions {
   display: flex;
   gap: 8px;
+}
+
+.cover-field {
+  width: 100%;
+}
+
+.cover-preview {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.cover-preview img {
+  width: 160px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.cover-upload__icon {
+  font-size: 28px;
+  color: var(--text-placeholder);
+}
+
+.cover-upload__text {
+  font-size: 13px;
+  color: var(--text-regular);
+  margin: 4px 0 8px;
+}
+
+.cover-upload__tip {
+  font-size: 12px;
+  color: var(--text-placeholder);
 }
 </style>

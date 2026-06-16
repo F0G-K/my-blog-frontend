@@ -14,6 +14,8 @@ import {
 } from 'element-plus'
 import {
   Document,
+  Collection,
+  CollectionTag,
   ChatLineSquare,
   FolderOpened,
   Setting,
@@ -34,6 +36,8 @@ const drawerOpen = ref(false)
 
 const menus = [
   { index: '/admin/articles', label: '文章管理', icon: Document },
+  { index: '/admin/categories', label: '分类管理', icon: Collection },
+  { index: '/admin/tags', label: '标签管理', icon: CollectionTag },
   { index: '/admin/comments', label: '评论审核', icon: ChatLineSquare },
   { index: '/admin/projects', label: '项目管理', icon: FolderOpened },
   { index: '/admin/site-info', label: '站点信息', icon: Setting },
@@ -78,7 +82,11 @@ async function logout() {
       </header>
 
       <section class="admin-content">
-        <RouterView />
+        <RouterView v-slot="{ Component, route: r }">
+          <Transition name="fade-slide" mode="out-in">
+            <component :is="Component" :key="r.path" />
+          </Transition>
+        </RouterView>
       </section>
     </div>
 
