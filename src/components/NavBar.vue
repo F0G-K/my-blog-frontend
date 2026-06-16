@@ -1,8 +1,8 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { ElDrawer, ElInput, ElIcon } from 'element-plus'
-import { Search, Menu as MenuIcon } from '@element-plus/icons-vue'
+import { ElInput, ElIcon, ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus'
+import { Search, ArrowDown } from '@element-plus/icons-vue'
 import ThemeToggle from './ThemeToggle.vue'
 import { useBreakpoint } from '@/composables/useBreakpoint'
 
@@ -18,30 +18,61 @@ const navLinks = [
   { name: 'about', label: '关于', to: '/about' },
 ]
 
-const drawerOpen = ref(false)
 const keyword = ref('')
+
+// 移动端下拉折叠态显示的标签:当前导航项,找不到则回退「首页」
+const currentNavLabel = computed(() => {
+  const matched = navLinks.find((l) => l.name === route.name)
+  return matched ? matched.label : '首页'
+})
 
 function doSearch() {
   const kw = keyword.value.trim()
   if (!kw) return
   router.push({ name: 'search', query: { keyword: kw } })
   keyword.value = ''
-  drawerOpen.value = false
 }
 
-// 路由变化时关闭抽屉
-watch(
-  () => route.fullPath,
-  () => {
-    drawerOpen.value = false
-  },
-)
+// 移动端:搜索图标进入全屏搜索页
+function goSearch() {
+  router.push({ name: 'search' })
+}
+
+// 移动端:下拉项点击导航
+function onNavSelect(to) {
+  router.push(to)
+}
 </script>
 
 <template>
   <header class="navbar">
     <div class="navbar__inner container">
       <RouterLink to="/" class="navbar__brand">个人博客</RouterLink>
+
+      <!-- 移动端:品牌旁的导航下拉(默认显示当前页/首页) -->
+      <el-dropdown
+        v-if="isMobile"
+        class="navbar__nav-dropdown"
+        trigger="click"
+        placement="bottom-start"
+      >
+        <button class="navbar__nav-trigger" type="button">
+          <span>{{ currentNavLabel }}</span>
+          <el-icon class="navbar__nav-arrow"><ArrowDown /></el-icon>
+        </button>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item
+              v-for="link in navLinks"
+              :key="link.name"
+              :class="{ 'is-active': route.name === link.name }"
+              @click="onNavSelect(link.to)"
+            >
+              {{ link.label }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
 
       <!-- 桌面 / 平板:横向菜单 -->
       <nav v-if="!isMobile" class="navbar__menu">
@@ -57,6 +88,7 @@ watch(
       </nav>
 
       <div class="navbar__actions">
+        <!-- 桌面 / 平板:搜索框 -->
         <div v-if="!isMobile" class="navbar__search">
           <el-input
             v-model="keyword"
@@ -66,48 +98,18 @@ watch(
             @keyup.enter="doSearch"
           />
         </div>
-        <ThemeToggle />
-        <!-- 移动端:汉堡按钮 -->
+        <!-- 移动端:搜索图标进搜索页 -->
         <button
           v-if="isMobile"
-          class="navbar__hamburger"
-          aria-label="打开菜单"
-          @click="drawerOpen = true"
+          class="navbar__icon-btn"
+          aria-label="搜索"
+          @click="goSearch"
         >
-          <el-icon :size="20"><MenuIcon /></el-icon>
+          <el-icon :size="18"><Search /></el-icon>
         </button>
+        <ThemeToggle />
       </div>
     </div>
-
-    <!-- 移动端抽屉:菜单 + 搜索 + 主题 -->
-    <el-drawer
-      v-model="drawerOpen"
-      title="菜单"
-      direction="rtl"
-      size="78%"
-      :with-header="true"
-    >
-      <div class="drawer-search">
-        <el-input
-          v-model="keyword"
-          placeholder="搜索文章…"
-          :prefix-icon="Search"
-          clearable
-          @keyup.enter="doSearch"
-        />
-      </div>
-      <nav class="drawer-menu">
-        <RouterLink
-          v-for="link in navLinks"
-          :key="link.name"
-          :to="link.to"
-          class="drawer-menu__link"
-          :class="{ 'is-active': route.name === link.name }"
-        >
-          {{ link.label }}
-        </RouterLink>
-      </nav>
-    </el-drawer>
   </header>
 </template>
 
@@ -171,6 +173,42 @@ watch(
   background: var(--color-primary-soft);
 }
 
+/* 移动端导航下拉触发器(胶囊) */
+.navbar__nav-dropdown {
+  margin-right: auto;
+}
+
+.navbar__nav-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border: none;
+  border-radius: var(--radius-round, 999px);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  transition:
+    background var(--dur-fast) var(--ease-soft),
+    transform var(--dur-fast) var(--ease-soft);
+}
+
+.navbar__nav-trigger:hover {
+  background: color-mix(in srgb, var(--color-primary) 22%, transparent);
+}
+
+.navbar__nav-arrow {
+  font-size: 12px;
+  transition: transform var(--dur-fast) var(--ease-soft);
+}
+
+/* 下拉展开时箭头翻转(Element Plus 给触发元素加 aria/visible 状态) */
+.navbar__nav-dropdown:deep(.el-dropdown) {
+  line-height: normal;
+}
+
 .navbar__actions {
   display: flex;
   align-items: center;
@@ -182,7 +220,8 @@ watch(
   width: 200px;
 }
 
-.navbar__hamburger {
+/* 图标按钮(搜索):与主题切换按钮一致的尺寸/hover */
+.navbar__icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -192,32 +231,28 @@ watch(
   background: transparent;
   color: var(--text-regular);
   border-radius: var(--radius-sm);
+  transition:
+    background var(--dur-fast) var(--ease-soft),
+    color var(--dur-fast) var(--ease-soft);
 }
 
-.navbar__hamburger:hover {
+.navbar__icon-btn:hover {
   background: var(--bg-hover);
-}
-
-.drawer-search {
-  margin-bottom: 16px;
-}
-
-.drawer-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.drawer-menu__link {
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  color: var(--text-primary);
-  font-size: 16px;
-}
-
-.drawer-menu__link:hover,
-.drawer-menu__link.is-active {
-  background: var(--color-primary-soft);
   color: var(--color-primary);
+}
+
+/* 移动端顶栏间距收紧,避免 375px 拥挤 */
+@media (max-width: 767px) {
+  .navbar__inner {
+    gap: 10px;
+  }
+}
+</style>
+
+<style>
+/* 下拉菜单当前项高亮(下拉菜单挂在 body 上,需非 scoped) */
+.el-dropdown-menu__item.is-active {
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
 }
 </style>
