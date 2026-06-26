@@ -8,6 +8,7 @@
  */
 import NavBar from '@/components/NavBar.vue'
 import ProfileCard from '@/components/ProfileCard.vue'
+import AppFooter from '@/components/AppFooter.vue'
 import { useBreakpoint } from '@/composables/useBreakpoint'
 
 const { isDesktop, isMobile } = useBreakpoint()
@@ -37,6 +38,9 @@ const { isDesktop, isMobile } = useBreakpoint()
         </div>
       </main>
     </div>
+
+    <!-- 站点页脚:ICP 备案号(整宽,贴底) -->
+    <AppFooter />
   </div>
 </template>
 
