@@ -44,7 +44,7 @@ onMounted(async () => {
         <el-empty v-if="!categories.length" description="暂无分类" />
       </div>
 
-      <h2 class="section-title category__sub">标签云</h2>
+      <h2 id="tag-cloud" class="section-title category__sub">标签云</h2>
       <div class="tag-cloud">
         <span v-for="t in tags" :key="t.id" class="tag-cloud__item" @click="goTag(t)">
           {{ t.name }} <em>{{ t.articleCount }}</em>
@@ -58,6 +58,8 @@ onMounted(async () => {
 <style scoped>
 .category__sub {
   margin-top: 32px;
+  /* 锚点滚动时避免被 sticky 顶栏遮住 */
+  scroll-margin-top: calc(var(--header-height) + 16px);
 }
 
 .cat-grid {
